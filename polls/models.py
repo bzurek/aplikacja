@@ -28,3 +28,26 @@ class Person(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Stanowisko(models.Model):
+    nazwa = models.CharField(max_length=50)
+    opis = models.CharField(max_length=50, null=True, blank=True)
+    def __str__(self):
+        return self.nazwa
+
+class Osoba(models.Model):
+    plcie = (
+        ('K', 'Kobieta'),
+        ('M', 'Mezczyzna')
+    )
+    imie = models.CharField(max_length=50)
+    nazwisko = models.CharField(max_length=50)
+    plec = models.CharField(max_length=1, choices=plcie)
+    stanowisko = models.ForeignKey(Stanowisko, null=True, blank=True, on_delete=models.SET_NULL)
+    data_dodania = models.DateField(auto_now=True)
+        class Meta:
+            ordering = ["nazwisko"]
+    def __str__(self):
+        return self.imie
+
