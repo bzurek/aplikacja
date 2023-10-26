@@ -10,7 +10,10 @@ SHIRT_SIZES = (
         ('L', 'Large'),
     )
 
-
+Plcie = (
+    ('K', 'Kobieta'),
+    ('M', 'Mezczyzna'),
+)
 class Team(models.Model):
     name = models.CharField(max_length=60)
     country = models.CharField(max_length=2)
@@ -37,17 +40,15 @@ class Stanowisko(models.Model):
         return self.nazwa
 
 class Osoba(models.Model):
-    plcie = (
-        ('K', 'Kobieta'),
-        ('M', 'Mezczyzna')
-    )
     imie = models.CharField(max_length=50)
     nazwisko = models.CharField(max_length=50)
-    plec = models.CharField(max_length=1, choices=plcie)
+    plec = models.CharField(max_length=1, choices=Plcie)
     stanowisko = models.ForeignKey(Stanowisko, null=True, blank=True, on_delete=models.SET_NULL)
     data_dodania = models.DateField(auto_now=True)
-        class Meta:
+
+    class Meta:
             ordering = ["nazwisko"]
+
     def __str__(self):
         return self.imie
 
